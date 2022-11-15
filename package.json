@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "@types/node": "^18.11.7"
+  },
+  "dependencies": {
+    "@fastify/view": "^7.1.1",
+    "fastify": "^4.9.2",
+    "liquidjs": "^9.42.1",
+    "typescript": "^4.8.4"
+  },
+  "name": "jeopardy",
+  "version": "1.0.0",
+  "main": "src/App.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

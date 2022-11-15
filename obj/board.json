@@ -1,0 +1,257 @@
+{
+  "single": {
+    "categories": [
+      {
+        "name": "4 Letter Words",
+        "questions": [
+          {
+            "question": "This programming language, owned and maintained by Oracle is supported by more than 5.5 billion devices",
+            "answer": "Java"
+          },
+          {
+            "question": "This command, symbolized by the \"vertical line\" on a keyboard, has been given this name by the unix community",
+            "answer": "Pipe"
+          },
+          {
+            "question": "This short distance communication standard is used by devices such as wireless key cards, Apple Pay, and store security tags.",
+            "answer": "RFID"
+          },
+          {
+            "question": "This architecture is known for its following characteristics: Limited number of instructions; Fixed length instruction set; All instructions are executed in a single clock cycle; Increased number of registers",
+            "answer": "RISC"
+          },
+          {
+            "question": "Also known as the \"superuser\", this standard unix account can read from and write to any file on disk.",
+            "answer": "root"
+          }
+        ]
+      },
+      {
+        "name": "Companies",
+        "questions": [
+          {
+            "question": "The name of this company is most often used as a verb, to find unknown information.",
+            "answer": "Google"
+          },
+          {
+            "question": "This tech giant, also known as \"Big Blue\", is well known for being the first company to produce a commercially viable mainframe computer. Nowadays, they deal with AI and Cloud Computing.",
+            "answer": "IBM"
+          },
+          {
+            "question": "This company, which was colloquially known as \"Ma Bell\" throughout the 80's is a well known telecomunications provider,",
+            "answer": "AT&T"
+          },
+          {
+            "question": "This company, well known for the creation of Java, also holds the trademarks to MySQL and JavaScript.",
+            "answer": "Oracle"
+          },
+          {
+            "question": "This now defunct company was a chip fabricator, responsible for making the 6502, as well as the KIM-1. It would later be bought out by Commodore Business Systems.",
+            "answer": "MOS"
+          }
+        ]
+      },
+      {
+        "name": "Symbols",
+        "questions": [
+          { "question": "img::sym/usb.png", "answer": "USB" },
+          { "question": "img::sym/bluetooth.png", "answer": "Bluetooth" },
+          { "question": "img::sym/hotspot.png", "answer": "Hotspot" },
+          { "question": "img::sym/ethernet.png", "answer": "Ethernet" },
+          { "question": "img::sym/nfc.png", "answer": "NFC" }
+        ]
+      },
+      {
+        "name": "Apple",
+        "questions": [
+          {
+            "question": "This device, released by Apple in 2007 is Apple's most-sold brand",
+            "answer": "iPhone"
+          },
+          {
+            "question": "This device, released by Apple in 2010 had an Apple A4 chip, and a 9.7\" touchscreen.",
+            "answer": "iPad"
+          },
+          {
+            "question": "This mp3 player family, originally unveiled in 2001, was only recently discontinued in 2022.",
+            "answer": "iPod"
+          },
+          {
+            "question": "While Apple had been making laptops under the \"iBook\" brand, it was replaced in favor of this family of devices.",
+            "answer": "MacBook"
+          },
+          {
+            "question": "This device, released in 1977, was Apple's first computer to come with a keyboard and a case.",
+            "answer": "Apple ]["
+          }
+        ]
+      },
+      {
+        "name": "Languages",
+        "questions": [
+          { "question": "img::lang/python.png", "answer": "Python" },
+          { "question": "img::lang/java.png", "answer": "Java" },
+          { "question": "img::lang/js.png", "answer": "Javascript" },
+          { "question": "img::lang/c.png", "answer": "C/C++" },
+          { "question": "img::lang/basic.png", "answer": "Basic" }
+        ]
+      },
+      {
+        "name": "Unix Commands",
+        "questions": [
+          {
+            "question": "If you want to move to a folder in the terminal, use this command, followed by the folder name.",
+            "answer": "cd"
+          },
+          {
+            "question": "If you want to see what is in a directory, use this two letter command.",
+            "answer": "ls"
+          },
+          {
+            "question": "If you want to delete a file from a directory, use this basic command.",
+            "answer": "rm"
+          },
+          {
+            "question": "Lost in directories? Use this command to find where you are.",
+            "answer": "pwd"
+          },
+          {
+            "question": "If you want to look into a file's ASCII Text contents, use this command.",
+            "answer": "cat"
+          }
+        ]
+      }
+    ]
+  },
+  "double": {
+    "categories": [
+      {
+        "name": "Rate My Professor",
+        "questions": [
+          {
+            "question": "This professor is the best professor in the BSU computer science department bar none. She is passionate and funny, always giving good lectures. She truly cares about the students and if you show her you put in effort, she will give you a good grade. I always take her courses whenever I get the chance.",
+            "answer": "Black"
+          },
+          {
+            "question": "Extremely nice lady who makes it very clear exactly what you need to do to pass. She makes it very easy to get an A if you just do the homework and show up to present the homework. The midterm and final problems look just like the homework. Takes her time in class to show you how to do the problems. Great professor.",
+            "answer": "Gross"
+          },
+          {
+            "question": "I'm currently taking him for Rust vs. Go. He is a very knowledgeable guy and seems excited to teach it. There is a lot of reading between two textbooks which you'll definitely need to know. He teaches this as a grad course as well and to be honest the amount of work he gives us project-wise is unfair. Be prepared to be \"voluntold\" to participate",
+            "answer": "Santore"
+          },
+          {
+            "question": "THIS PROFESSOR IS A MUST-TAKE. He is caring and stops after each subject to make sure everyone understands. His examples are funny. He is very kind and makes you want to try. Classes are centered around packet note-taking that he leads you through. Pay attention, take the notes it is a smooth ride. Given us 2 midterms that have been very easy. Great & caring!",
+            "answer": "Kim"
+          },
+          {
+            "question": "Loved him, always had clear instruction on assignments and was very lenient on some grades. Was always available for help, wants to see you succeed. Very chill and I enjoyed his class, I hope to see more of him in the future",
+            "answer": "Stanley"
+          }
+        ]
+      },
+      {
+        "name": "Sorting",
+        "questions": [
+          {"question": "img::sorts/bubble.png","answer": "Bubble Sort"},
+          {"question": "img::sorts/selection.png","answer": "Selection Sort"},
+          {"question": "img::sorts/quick.png","answer": "Quick Sort"},
+          {"question": "img::sorts/bogo.png","answer": "Bogo Sort"},
+          {"question": "img::sorts/radix.png","answer": "Radix Sort"}
+          
+        ]
+      },
+      {
+        "name": "Colleges and Universities",
+        "questions": [
+          {
+            "question": "This Massachusetts university offers free online CS50 courses",
+            "answer": "Harvard"
+          },
+          { 
+            "question": "This Cambridge Based university created a well known open source software license.", 
+            "answer": "MIT" 
+          },
+          { 
+            "question": "This Unix Operating System, OpenBSD was developed by this university on the west coast.", 
+            "answer": "UCB" 
+          },
+          { 
+            "question": "The Alma Mater of Alan Turing, the inventor of the Turing Machine, and the machine that broke the Enigma Code.", 
+            "answer": "Cambridge" 
+          },
+          { 
+            "question": "Steve Jobs attended this college before he dropped out.", 
+            "answer": "Reed" 
+          }
+        ]
+      },
+      {
+        "name": "Interim",
+        "questions": [
+          {
+            "question": "From Netscape (2011) to Brave (2016), Brendan Eich worked at this company in the interim.",
+            "answer": "Mozilla"
+          },
+          {
+            "question": "From Apple (1985) to Apple (1997), Steve Jobs worked at this rival computer company in the interim.",
+            "answer": "NeXT"
+          },
+          {
+            "question": "From Software Tools (1976) with P.J. Plauger, to Software Tools in Pascal, (1981) with P.J. Plauger. Brian Kernigan, along with Dennis Ritchie wrote this well-known book in the interim.",
+            "answer": "The C Programming Language"
+          },
+          {
+            "question": "From Rose-Hulman Institute of Technology , to University of Maryland, College Park,  Dr. Black attended this university for her masters",
+            "answer": "University of Maryland, College Park"
+          },
+          {
+            "question": "From State College at Bridgewater (1960 - 1965) to Bridgewater State University (2010 - Present), this was the name of the school during this break",
+            "answer": "Bridgewater State College"
+          }
+        ]
+      },
+      {
+        "name": "Use Your Logic",
+        "questions": [
+          { "question": "img::logic/neq.png", "answer": "T" },
+          { "question": "img::logic/and.png", "answer": "F" },
+          { "question": "img::logic/or.png", "answer": "T" },
+          { "question": "img::logic/not.png", "answer": "F" },
+          { "question": "img::logic/eq.png", "answer": "F" }
+        ]
+      },
+      {
+        "name": "Unix Commands",
+        "questions": [
+          {
+            "question": "Released the first Microprocessor",
+            "answer": "Intel"
+          },
+          {
+            "question": "First to reach 64 Bit Processors",
+            "answer": "AMD"
+          },
+          {
+            "question": "Has the 'ARC' line of Graphics Processors",
+            "answer": "Intel"
+          },
+          {
+            "question": "Consumer chips are classified as different 'Lakes' based on their architectures",
+            "answer": "Intel"
+          },
+          {
+            "question": "Has the 'Radeon' line of Graphics Processors",
+            "answer": "AMD"
+          }
+        ]
+      }
+    ]
+  },
+
+  "final": {
+    "category": "Computing History",
+    "question": "How many units did the best selling computer (Commodore 64, released in 1982) sell throughout it's product life? (+/- 15%)",
+    "answer": "17,000,000"
+  }
+}

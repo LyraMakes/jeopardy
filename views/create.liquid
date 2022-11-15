@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jeopardy | Create a Game</title>
+
+    <style>
+      table#defineTable,
+      #defineTable th,
+      #defineTable td {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border-color: black;
+        border-style: none;
+        border-width: 1px;
+      }
+    </style>
+
+    <script>
+      function createDefinition() {
+        let html = '<table id="defineTable">';
+        html += '<tr>'
+        for (let i = 1; i <= 6; i++) {
+          html += `<th class="categoryInput"><input type="text" id="categoryInput${i}" placeholder="Category ${i}"></th>`
+        }
+        html += '</tr>'
+
+
+        for (let j = 1; j <= 5; j++) {
+          html += `<tr class="questionInput">`;
+          for (let i = 1; i <= 6; i++) {
+            html += `<td><input type="text" id="c${i}q${j}" placeholder="Question ${j}"></td>`;
+          }
+          html += '</tr><tr class="answerInput">';
+          for (let i = 1; i <= 6; i++) {
+            html += `<td><input type="text" id="c${i}a${j}" placeholder="Answer ${j}"></td>`;
+          }
+          html += '</tr>';
+        }
+
+        html += "</table><br/><br/>";
+        html += "<button onclick='defineBoard()'>Update</button>";
+        return html;
+      }
+
+      function loadFile() {
+        let file = document.getElementById("file").files[0];
+        let reader = new FileReader();
+
+        reader.onload = function(fileLoadedEvent) {
+          let textFromFileLoaded = fileLoadedEvent.target.result;
+          let text = JSON.stringify(JSON.parse(textFromFileLoaded), null, 2);
+          document.getElementById("inputTextToSave").value = textFromFileLoaded;
+        };
+
+        reader.readAsText(file, "UTF-8");
+      }
+
+
+
+      function defineBoard() {
+        let jsonObject = {};
+        jsonObject.board = {};
+
+        let categories = [];
+
+        for (let i = 1; i <= 6; i++) {
+          let category = {}
+          category.name = document.getElementById(`categoryInput${i}`).value;
+          category.questions = [];
+
+          for (let j = 1; j <= 5; j++) {
+            let question = {}
+            question.question = document.getElementById(`c${i}q${j}`).value;
+            question.answer = document.getElementById(`c${i}a${j}`).value;
+            category.questions.push(question);
+          }
+
+          categories.push(category);
+        }
+
+        jsonObject.board.categories = categories;
+
+        document.getElementById("inputTextToSave").value = JSON.stringify(jsonObject, null, 2);
+
+      }
+
+
+      function init() {
+        document.getElementById('upload').addEventListener('change', () => {
+          document.getElementById('upload-file').style.display = 'block';
+          document.getElementById('define-board').style.display = 'none';
+        });
+
+        document.getElementById('define').addEventListener('change', () => {
+          document.getElementById('upload-file').style.display = 'none';
+          document.getElementById('define-board').style.display = 'block';
+        });
+
+        document.getElementById('define-board').innerHTML = createDefinition();
+      }
+
+      function saveBoard() {
+        let textToSave = document.getElementById("inputTextToSave").value;
+        downloadObjectAsJson(JSON.parse(textToSave), 'board.json');
+
+      }
+
+      function downloadObjectAsJson(exportObj, exportName) {
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+        var downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", exportName);
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+      }
+
+      function startGame() {
+
+// Do a post request
+        let textToSave = document.getElementById("inputTextToSave").value;
+        let board = JSON.parse(textToSave);
+        let teams = {
+          team1: document.getElementById("team1").value,
+          team2: document.getElementById("team2").value,
+          team3: document.getElementById("team3").value
+        };
+        let game = {
+          boardData: board,
+          teamData: teams
+        };
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/jeopardy/create", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let response = JSON.parse(xhr.responseText);
+            window.location = `/jeopardy/game/${
+              response.id
+            }`;
+          }
+        }
+        xhr.send(JSON.stringify(game));
+      }
+    </script>
+  </head>
+  <body onload="bodyInit()">
+    <h1>Create a new Jeopardy game</h1>
+    <input type="radio" id="upload" name="boardType" value="upload">
+    <label for="upload">Upload a board</label>
+    <input type="radio" id="define" name="boardType" value="define" checked>
+    <label for="define">Define a board</label>
+
+    <br/>
+    <br/>
+
+    <div id="upload-file" style="display:none">
+      <input type="file" id="file" name="file" accept=".json">
+      <button onclick="loadFile()">Upload File</button>
+    </div>
+    <div id="define-board"></div>
+
+    <br/>
+    <br/>
+
+    <div>
+
+      <textarea id="inputTextToSave"></textarea>
+      <br/><br/>
+      <button onclick="saveBoard()">Save</button>
+
+      <br/><br/>
+      <input type="text" id="team1" placeholder="Team 1"><br/><br/>
+      <input type="text" id="team2" placeholder="Team 2"><br/><br/>
+      <input type="text" id="team3" placeholder="Team 3"><br/><br/>
+
+      <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <script>
+      function bodyInit() {
+        init();
+      }
+    </script>
+  </body>
+</html>
