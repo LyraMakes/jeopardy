@@ -3,6 +3,11 @@ export interface IParamsGameID {
     gameID: number;
 }
 
+export interface IParamsGameIDQuestion {
+    gameID: number;
+    ques: string;
+}
+
 export interface IGameData {
     boardData: JsonBoardData;
     teamData: {team1: string, team2: string, team3: string};

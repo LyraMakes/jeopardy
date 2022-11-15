@@ -56,10 +56,9 @@ export class Board {
 
             categories.push(newCategory);
         });
-
-
-
     }
+
+    
 }
 
 export class Category {

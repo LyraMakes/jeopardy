@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jeopardy | Game #{{gameID}}</title>
+
+    <script>
+      const questionData = {{questionData}};
+
+      var team1Score = 0;
+      var team2Score = 0;
+      var team3Score = 0;
+
+      function initTeams(t1, t2, t3) {
+        team1Score = t1;
+        team2Score = t2;
+        team3Score = t3;
+      }
+
+      function setContent(content) {
+        let contentTd = document.getElementById('question-content');
+        if (content == "question") {
+          contentTd.innerHTML = questionData.question;
+        } else if (content == "answer") {
+          contentTd.innerHTML = questionData.answer;
+        } else {
+          contentTd.innerHTML = "No content";
+        }
+      }
+
+      function teamAnswered(team: number, isCorrect: boolean) {
+        if (team == 1) {
+          team1Score += questionData.value * (isCorrect ? 1 : -1);
+        } else if (team == 2) {
+          team2Score += questionData.value * (isCorrect ? 1 : -1);
+        } else if (team == 3) {
+          team3Score += questionData.value * (isCorrect ? 1 : -1);
+        }
+        
+        if (isCorrect) { setContent("answer");}
+      }
+
+    </script>
+
+    <style>
+      body {
+        background-color: #000066;
+      }
+
+      .board-background {
+        background-color: #060CE9;
+      }
+
+      
+
+      
+
+      
+
+
+    </style>
+  </head>
+  <body>
+
+
+    <div id="board-parent">
+      <table>
+        <tr> <td id="question-content"></td> </tr>
+        <tr> {{ teamData }} </tr>
+      </table>
+    </div>
+
+
+  </body>
+</html>

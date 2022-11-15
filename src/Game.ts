@@ -44,18 +44,50 @@ export class Game {
         this.teams.push((typeof team == "string") ? new Team(team) : team);
     }
 
-
-    genNewTeamId(): number {
-        // TODO - Finish genNewTeamId
-        return -1;
-    }
-
     renderBoard(): string {
         return this.board.renderBoard(this.isDoubleJeopardy);
     }
 
     renderScore(): string {
         return this.teams.map( (team) => `<tr><td>${team.name}</td></tr><tr><td>\$${team.score}</td></tr>` ).join('');
+    }
+
+    renderQuestionTeams(): string {
+        let html = "<tr>";
+        for (let i = 0; i < this.teams.length; i++) {
+            html += `<td class="teamName">${this.teams[i].name}</td>`;
+            html += `<td class="teamAnswer">`;
+            html += `<button class="correct" id="team${i}Correct>Correct</button><br/>`;
+            html += `<button class="incorrect" id="team${i}Incorrect>Incorrect</button>`;
+            html += `</td>`;
+        }
+
+        html += "</tr>";
+
+        return html;
+    }
+
+    getQuestion(question: string): string {
+        let result = {question: "", answer: ""};
+        let {category,questionNum} = {category: parseInt(question[1]), questionNum: parseInt(question[3])};
+
+        
+        if (this.isFinalJeopardy) {
+            result.question = this.board.finalJeopardy.question;
+            result.answer = this.board.finalJeopardy.answer;
+        } else if (this.isDoubleJeopardy) {
+            let boardQuestion = this.board.doubleJeopardy[category].questions[questionNum];
+            
+            result.question = boardQuestion.question;
+            result.answer = boardQuestion.answer;
+        } else {
+            let boardQuestion = this.board.singleJeopardy[category].questions[questionNum];
+            
+            result.question = boardQuestion.question;
+            result.answer = boardQuestion.answer;
+        }
+
+        return JSON.stringify(result);
     }
 }
 
