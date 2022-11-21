@@ -42,6 +42,8 @@
         }
         
         if (isCorrect) { setContent("answer");}
+
+        updateScores();
       }
 
       function updateScores() {
@@ -54,9 +56,27 @@
       function init() {
         setContent("question");
 
-        team1Score = document.getElementById('team0Score').innerHTML;
-        team2Score = document.getElementById('team1Score').innerHTML;
-        team3Score = document.getElementById('team2Score').innerHTML;
+        team1Score = parseInt(document.getElementById('team0Score').innerHTML);
+        team2Score = parseInt(document.getElementById('team1Score').innerHTML);
+        team3Score = parseInt(document.getElementById('team2Score').innerHTML);
+      }
+
+      function submitScores() {
+        let scores = {
+          team1: team1Score,
+          team2: team2Score,
+          team3: team3Score
+        };
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", `/jeopardy/game/{{gameID}}/question/{{ques}}/answer`, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            window.location.href = "/jeopardy/game/{{gameID}}";
+          }
+        };
+        xhr.send(JSON.stringify(scores));
       }
 
     </script>
@@ -64,6 +84,7 @@
     <style>
       body {
         background-color: #000066;
+        font-family: "Ariel Bold", sans-serif;
       }
 
       .board-background {
@@ -77,6 +98,26 @@
 
         table-layout: fixed;
       }
+
+      .teamName, .teamScore {
+        text-align: center;
+        font-size: 2em;
+        font-weight: bold;
+        color: #FFFFFF;
+      }
+
+      
+      .question-content {
+        text-align: center;
+        font-size: 4em;
+        font-weight: bold;
+        color: #FFFFFF;
+        height: 80%;
+      }
+
+
+
+
 
       
 
@@ -92,7 +133,7 @@
 
     <div id="board-parent">
       <table id="question">
-        <tr> <td id="question-content" colspan="9" onclick="setContent(`answer`)"></td> </tr>
+        <tr class="question-content"> <td id="question-content" colspan="9" onclick="setContent(`answer`)"></td> </tr>
         <tr> {{ teamData }} </tr>
       </table>
     </div>

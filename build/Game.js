@@ -42,15 +42,16 @@ class Game {
             html += `<td class="teamName">${this.teams[i].name}</td>`;
             html += `<td class="teamScore" id="team${i}Score">${this.teams[i].score}</td>`;
             html += `<td class="teamAnswer">`;
-            html += `<button class="correct" id="team${i}Correct">Correct</button><br/>`;
-            html += `<button class="incorrect" id="team${i}Incorrect">Incorrect</button>`;
+            html += `<button class="correct" id="team${i}Correct" onclick="teamAnswered(${i + 1}, true)">Correct</button><br/>`;
+            html += `<button class="incorrect" id="team${i}Incorrect" onclick="teamAnswered(${i + 1}, false)">Incorrect</button>`;
             html += `</td>`;
         }
+        html += `<td class="exit"><button class="exitButton">BACK</button></td>`;
         html += "</tr>";
         return html;
     }
     getQuestion(question) {
-        let result = { question: "", answer: "" };
+        let result = { question: "", answer: "", value: 0 };
         let { category, questionNum } = { category: parseInt(question[1]), questionNum: parseInt(question[3]) };
         if (this.isFinalJeopardy) {
             result.question = this.board.finalJeopardy.question;
@@ -60,14 +61,16 @@ class Game {
             let boardQuestion = this.board.doubleJeopardy[category].questions[questionNum];
             result.question = boardQuestion.question;
             result.answer = boardQuestion.answer;
+            result.value = (questionNum + 1) * 400;
         }
         else {
             let boardQuestion = this.board.singleJeopardy[category].questions[questionNum];
             result.question = boardQuestion.question;
             result.answer = boardQuestion.answer;
+            result.value = (questionNum + 1) * 200;
         }
         if (result.question.startsWith("img::")) {
-            result.question = `<img src="${result.question.substring(5)}" />`;
+            result.question = `<img src="/static/images/${result.question.substring(5)}" />`;
         }
         else if (result.question.startsWith("https://") || result.question.startsWith("http://")) {
             result.question = `<img src="${result.question}" />`;

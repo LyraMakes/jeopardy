@@ -8,7 +8,8 @@
 
     <script>
       function boardClick(x, y) {
-        alert(`Clicked ${x}, ${y}`);
+        // Redirect to the question page
+        window.location.href = `/jeopardy/game/{{gameID}}/question/c${y}q${x}`;
       }
     </script>
 
@@ -73,8 +74,11 @@
         margin-right: auto;
       }
 
-      #score th {
-        
+      #scores tr {
+        text-align: center;
+        font-size: 2em;
+        font-weight: bold;
+        color: #FFFFFF;
       }
     </style>
   </head>

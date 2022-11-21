@@ -42,8 +42,9 @@ const gameEngine = new Engine();
 
 // Serve static images
 app.get<{Params: IImageData}>("/static/images/:folder/:image", async (req, res) => {  
+  console.log(`Attempting to retrieve static/img/${req.params.folder}/${req.params.image}`)
   return res.code(200).header("Content-Type", "image/png")
-    .sendFile(`static/img/${req.params.folder}/${req.params.image}`);
+    .sendFile(`/img/${req.params.folder}/${req.params.image}`);
 })
 
 // Query server if board needs to update
@@ -86,7 +87,7 @@ app.get<{Params: IParamsGameIDQuestion}>(`${baseURL}/game/:gameID/question/:ques
       let question = game.getQuestion(ques);
       let teams = game.renderQuestionTeams();
 
-      res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams })
+      res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams, ques: ques })
   }
 });
 
@@ -138,7 +139,9 @@ app.post<{ Body: IGameData }>(`${baseURL}/create`, (req, res) => {
 });
 
 
-
+app.get(`${baseURL}/admin`, (req, res) => {
+    res.view("./views/admin.liquid");
+});
 
 
 // GET THE SERVER LISTENING ON PORT 4000

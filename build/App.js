@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // IMPORT OUR DEPENDENCIES
 const fastify_1 = __importDefault(require("fastify"));
 const view_1 = __importDefault(require("@fastify/view"));
+const static_1 = __importDefault(require("@fastify/static"));
 const liquidjs_1 = require("liquidjs");
 const path_1 = __importDefault(require("path"));
 const Engine_1 = require("./Engine");
@@ -23,9 +24,20 @@ app.register(view_1.default, {
         liquid: engine,
     },
 });
+// Register fastify-static
+app.register(static_1.default, {
+    root: path_1.default.join(dirname, "static"),
+    prefix: "/static/",
+});
 // Set base path for jeopardy app
 const baseURL = "/jeopardy";
 const gameEngine = new Engine_1.Engine();
+// Serve static images
+app.get("/static/images/:folder/:image", async (req, res) => {
+    console.log(`Attempting to retrieve static/img/${req.params.folder}/${req.params.image}`);
+    return res.code(200).header("Content-Type", "image/png")
+        .sendFile(`/img/${req.params.folder}/${req.params.image}`);
+});
 // Query server if board needs to update
 app.get(`${baseURL}/query/:gameID`, (req, res) => {
     const { gameID } = req.params;
@@ -58,7 +70,7 @@ app.get(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
     else {
         let question = game.getQuestion(ques);
         let teams = game.renderQuestionTeams();
-        res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams });
+        res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams, ques: ques });
     }
 });
 app.get(`${baseURL}/test/status`, (req, res) => {
@@ -90,6 +102,9 @@ app.post(`${baseURL}/create`, (req, res) => {
     game.AddTeam(team2);
     game.AddTeam(team3);
     res.send({ id: game.id });
+});
+app.get(`${baseURL}/admin`, (req, res) => {
+    res.view("./views/admin.liquid");
 });
 // GET THE SERVER LISTENING ON PORT 4000
 app.listen({ host: "0.0.0.0", port: 8000 }, (err, addr) => {

@@ -28,7 +28,11 @@ export class Board {
         for (let i = 0; i < numQuestions; i++) {
             questionsList.push("<tr class=\"board-row\">");
             for (let j = 0; j < numCategories; j++) {
-                questionsList.push(`<td class="board-value" onclick="boardClick(${i},${j})">\$${initValue * (i + 1)}</td>`);
+                if (categories[j].questions[i].answered) {
+                    questionsList.push(`<td class="board-value">$---</td>`);
+                } else {
+                    questionsList.push(`<td class="board-value" onclick="boardClick(${i},${j})">\$${initValue * (i + 1)}</td>`);
+                }
             }
             questionsList.push("</tr>");
         }
