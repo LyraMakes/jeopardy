@@ -14,6 +14,20 @@ export class Board {
         this.finalJeopardy = final;
     }
 
+    checkComplete(isDouble: boolean): boolean {
+        let categories = isDouble ? this.doubleJeopardy : this.singleJeopardy;
+
+        for (let i = 0; i < categories.length; i++) {
+            for (let j = 0; j < categories[i].questions.length; j++) {
+                if (!categories[i].questions[j].answered) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     renderBoard(isDouble: boolean): string {
         let categories = isDouble ? this.doubleJeopardy : this.singleJeopardy;
 

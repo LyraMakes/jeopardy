@@ -77,6 +77,23 @@ app.get<{Params: IParamsGameID}>(`${baseURL}/game/:gameID`, (req, res) => {
   }
 });
 
+app.get<{Params: IParamsGameID}>(`${baseURL}/game/:gameID/final`, (req, res) => {
+  const { gameID } = req.params;
+  let game = gameEngine.getGame(gameID);
+  if (game == null) {
+      res.status(404).send({error: "Game not found"});
+  } else {
+      let category = game.board.finalJeopardy.category;
+      let question = game.board.finalJeopardy.question;
+      let answer = game.board.finalJeopardy.answer;
+
+      let questionData = { category: category, question: question, answer: answer };
+      let teams = game.renderFinalTeams();
+
+      res.view("./views/final.liquid", { gameID: gameID, questionData: questionData, teamData: teams });
+  }
+});
+
 
 app.get<{Params: IParamsGameIDQuestion}>(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
   const { gameID, ques } = req.params;

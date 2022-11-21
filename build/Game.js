@@ -31,6 +31,10 @@ class Game {
         this.teams.push((typeof team == "string") ? new Team(team) : team);
     }
     renderBoard() {
+        if (!this.isDoubleJeopardy)
+            this.isDoubleJeopardy = this.board.checkComplete(false);
+        if (!this.isFinalJeopardy && this.isDoubleJeopardy)
+            this.isFinalJeopardy = this.board.checkComplete(true);
         return this.board.renderBoard(this.isDoubleJeopardy);
     }
     renderScore() {
@@ -46,7 +50,7 @@ class Game {
             html += `<button class="incorrect" id="team${i}Incorrect" onclick="teamAnswered(${i + 1}, false)">Incorrect</button>`;
             html += `</td>`;
         }
-        html += `<td class="exit"><button class="exitButton">BACK</button></td>`;
+        html += `<td class="exit"><button class="exitButton" onclick="submitScores()">BACK</button></td>`;
         html += "</tr>";
         return html;
     }

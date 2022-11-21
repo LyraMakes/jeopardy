@@ -7,8 +7,6 @@
     <title>Jeopardy | Game #{{gameID}}</title>
 
     <script>
-      const questionData = {{questionData}};
-
       var team1Score = 0;
       var team2Score = 0;
       var team3Score = 0;
@@ -34,14 +32,28 @@
 
       function teamAnswered(team, isCorrect) {
         if (team == 1) {
-          team1Score += questionData.value * (isCorrect ? 1 : -1);
+          team1Score += questionData.value * (
+            isCorrect
+              ? 1
+              : -1
+          );
         } else if (team == 2) {
-          team2Score += questionData.value * (isCorrect ? 1 : -1);
+          team2Score += questionData.value * (
+            isCorrect
+              ? 1
+              : -1
+          );
         } else if (team == 3) {
-          team3Score += questionData.value * (isCorrect ? 1 : -1);
+          team3Score += questionData.value * (
+            isCorrect
+              ? 1
+              : -1
+          );
         }
-        
-        if (isCorrect) { setContent("answer");}
+
+        if (isCorrect) {
+          setContent("answer");
+        }
 
         updateScores();
       }
@@ -53,12 +65,8 @@
       }
 
 
-      function init() {
-        setContent("question");
-
-        team1Score = parseInt(document.getElementById('team0Score').innerHTML);
-        team2Score = parseInt(document.getElementById('team1Score').innerHTML);
-        team3Score = parseInt(document.getElementById('team2Score').innerHTML);
+      function init() {}function show(id) {
+        document.getElementById(id).style.display = "block";
       }
 
       function submitScores() {
@@ -73,12 +81,13 @@
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            window.location.href = `/jeopardy/game/{{gameID}}?nocache=${(new Date()).getTime()}`;
+            window.location.href = `/jeopardy/game/{{gameID}}?nocache=${
+              (new Date()).getTime()
+            }`;
           }
         };
         xhr.send(JSON.stringify(scores));
       }
-
     </script>
 
     <style>
@@ -91,7 +100,7 @@
         background-color: #060CE9;
       }
 
-      table#question {
+      table#questionData {
         width: 70%;
         margin-left: auto;
         margin-right: auto;
@@ -99,14 +108,15 @@
         table-layout: fixed;
       }
 
-      .teamName, .teamScore {
+      .teamName,
+      .teamScore {
         text-align: center;
         font-size: 2em;
         font-weight: bold;
         color: #FFFFFF;
       }
 
-      
+
       .question-content {
         text-align: center;
         font-size: 4em;
@@ -115,26 +125,22 @@
         height: 80%;
       }
 
-
-
-
-
-      
-
-      
-
-      
-
-
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body onload="bodyInit()">
 
 
     <div id="board-parent">
-      <table id="question">
-        <tr class="question-content"> <td id="question-content" colspan="9" onclick="setContent(`answer`)"></td> </tr>
-        <tr> {{ teamData }} </tr>
+      <table id="questionData">
+        <tr class="question-content">
+          <td id="category" onclick="show(`question`)">{{questionData.category}}</td>
+          <td class="hidden" id="question" onclick="show(`answer`)">{{questionData.question}}</td>
+          <td class="hidden" id="answer">{{questionData.answer}}</td>
+        </tr>
+        <tr>{{teamData}}</tr>
       </table>
     </div>
 

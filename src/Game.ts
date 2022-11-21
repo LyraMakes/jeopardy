@@ -45,6 +45,9 @@ export class Game {
     }
 
     renderBoard(): string {
+        if (!this.isDoubleJeopardy) this.isDoubleJeopardy = this.board.checkComplete(false);
+        if (!this.isFinalJeopardy && this.isDoubleJeopardy) this.isFinalJeopardy = this.board.checkComplete(true);
+        
         return this.board.renderBoard(this.isDoubleJeopardy);
     }
 
@@ -69,6 +72,26 @@ export class Game {
 
         return html;
     }
+
+    renderFinalTeams(): string {
+        let html = "";
+        for (let i = 0; i < this.teams.length; i++) {
+            html += `<td class="teamName">${this.teams[i].name}</td>`;
+            html += `<td class="teamScore" id="team${i}Score">${this.teams[i].score}</td>`
+            html += `<td class="teamWager" id="team${i}Wager">`
+            html += `<input type="number" id="team${i}WagerInput" min="0" max="${this.teams[i].score}" value="0" />`;
+            html += `</td>`;
+            html += `<td class="teamAnswer">`;
+            html += `<button class="correct" id="team${i}Correct" onclick="teamAnswered(${i + 1}, true)">Correct</button><br/>`;
+            html += `<button class="incorrect" id="team${i}Incorrect" onclick="teamAnswered(${i + 1}, false)">Incorrect</button>`;
+            html += `</td>`;
+        }
+
+        html += `<td class="exit"><button class="exitButton" onclick="submitScores()">BACK</button></td>`;
+
+        return html;
+    }
+
 
     getQuestion(question: string): string {
         let result = {question: "", answer: "", value: 0};

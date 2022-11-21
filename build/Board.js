@@ -14,6 +14,17 @@ class Board {
         this.doubleJeopardy = double;
         this.finalJeopardy = final;
     }
+    checkComplete(isDouble) {
+        let categories = isDouble ? this.doubleJeopardy : this.singleJeopardy;
+        for (let i = 0; i < categories.length; i++) {
+            for (let j = 0; j < categories[i].questions.length; j++) {
+                if (!categories[i].questions[j].answered) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     renderBoard(isDouble) {
         let categories = isDouble ? this.doubleJeopardy : this.singleJeopardy;
         let cats = categories.map(({ name }) => `<th class="board-header">${name}</th>`).join('');
@@ -24,7 +35,12 @@ class Board {
         for (let i = 0; i < numQuestions; i++) {
             questionsList.push("<tr class=\"board-row\">");
             for (let j = 0; j < numCategories; j++) {
-                questionsList.push(`<td class="board-value" onclick="boardClick(${i},${j})">\$${initValue * (i + 1)}</td>`);
+                if (categories[j].questions[i].answered) {
+                    questionsList.push(`<td class="board-value">$---</td>`);
+                }
+                else {
+                    questionsList.push(`<td class="board-value" onclick="boardClick(${i},${j})">\$${initValue * (i + 1)}</td>`);
+                }
             }
             questionsList.push("</tr>");
         }

@@ -61,6 +61,20 @@ app.get(`${baseURL}/game/:gameID`, (req, res) => {
         res.view("./views/homepage.liquid", { gameID: gameID, gameBoard: gameBoard, scoreBoard: scoreBoard });
     }
 });
+app.get(`${baseURL}/game/:gameID/final`, (req, res) => {
+    const { gameID } = req.params;
+    let game = gameEngine.getGame(gameID);
+    if (game == null) {
+        res.status(404).send({ error: "Game not found" });
+    }
+    else {
+        let category = game.board.finalJeopardy.category;
+        let question = game.board.finalJeopardy.question;
+        let answer = game.board.finalJeopardy.answer;
+        let questionData = { category: category, question: question, answer: answer };
+        res.view("./views/final.liquid", { gameID: gameID, questionData: questionData });
+    }
+});
 app.get(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
     const { gameID, ques } = req.params;
     let game = gameEngine.getGame(gameID);
