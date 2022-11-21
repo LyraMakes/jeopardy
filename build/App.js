@@ -49,6 +49,31 @@ app.get(`${baseURL}/game/:gameID`, (req, res) => {
         res.view("./views/homepage.liquid", { gameID: gameID, gameBoard: gameBoard, scoreBoard: scoreBoard });
     }
 });
+app.get(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
+    const { gameID, ques } = req.params;
+    let game = gameEngine.getGame(gameID);
+    if (game == null) {
+        res.status(404).send({ error: "Game not found" });
+    }
+    else {
+        let question = game.getQuestion(ques);
+        let teams = game.renderQuestionTeams();
+        res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams });
+    }
+});
+app.post(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
+    const { gameID } = req.params;
+    const { team1, team2, team3 } = req.body;
+    let game = gameEngine.getGame(gameID);
+    if (game == null) {
+        res.status(404).send({ error: "Game not found" });
+    }
+    else {
+        game.teams[0].score = team1;
+        game.teams[1].score = team2;
+        game.teams[2].score = team3;
+    }
+});
 app.get(`${baseURL}/new`, (req, res) => {
     res.view("./views/create.liquid");
 });

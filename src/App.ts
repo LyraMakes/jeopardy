@@ -9,7 +9,7 @@ import { Game } from "./Game";
 import { Board } from "./Board";
 import { Engine } from "./Engine";
 
-import { IGameData, IParamsGameID, IParamsGameIDQuestion } from "./JSONBind";
+import { IAnswerData, IGameData, IParamsGameID, IParamsGameIDQuestion } from "./JSONBind";
 
 // CREATE OUR SERVER OBJECT
 const app = fastify({ logger: true })
@@ -75,6 +75,27 @@ app.get<{Params: IParamsGameIDQuestion}>(`${baseURL}/game/:gameID/question/:ques
 
       res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams })
   }
+});
+
+
+app.get(`${baseURL}/test/status`, (req, res) => {
+  res.send({ status: "OK" })
+});
+
+
+app.post<{Params: IParamsGameID, Body: IAnswerData}>(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
+  const { gameID } = req.params;
+  const { team1, team2, team3} = req.body;
+
+  let game = gameEngine.getGame(gameID);
+  if (game == null) {
+      res.status(404).send({error: "Game not found"});
+  } else {
+    game.teams[0].score = team1;
+    game.teams[1].score = team2;
+    game.teams[2].score = team3;
+  }
+
 });
 
 

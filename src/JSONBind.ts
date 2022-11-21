@@ -13,6 +13,12 @@ export interface IGameData {
     teamData: {team1: string, team2: string, team3: string};
 }
 
+export interface IAnswerData {
+    team1: number;
+    team2: number;
+    team3: number;
+}
+
 export interface JsonCategory {
     name: string;
     questions: JsonQuestion[];
