@@ -8,6 +8,11 @@ export interface IParamsGameIDQuestion {
     ques: string;
 }
 
+export interface IImageData {
+    folder: string;
+    image: string;
+}
+
 export interface IGameData {
     boardData: JsonBoardData;
     teamData: {team1: string, team2: string, team3: string};

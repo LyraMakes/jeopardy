@@ -3,6 +3,7 @@
     "@types/node": "^18.11.7"
   },
   "dependencies": {
+    "@fastify/static": "^6.5.0",
     "@fastify/view": "^7.1.1",
     "fastify": "^4.9.2",
     "liquidjs": "^9.42.1",

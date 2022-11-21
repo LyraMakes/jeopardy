@@ -1,6 +1,7 @@
 // IMPORT OUR DEPENDENCIES
 import fastify from "fastify";
 import fastify_view from "@fastify/view";
+import fastify_static from "@fastify/static";
 import { Liquid } from "liquidjs";
 import path from "path";
 
@@ -9,7 +10,7 @@ import { Game } from "./Game";
 import { Board } from "./Board";
 import { Engine } from "./Engine";
 
-import { IAnswerData, IGameData, IParamsGameID, IParamsGameIDQuestion } from "./JSONBind";
+import { IAnswerData, IGameData, IImageData, IParamsGameID, IParamsGameIDQuestion } from "./JSONBind";
 
 // CREATE OUR SERVER OBJECT
 const app = fastify({ logger: true })
@@ -28,10 +29,22 @@ app.register(fastify_view, {
   },
 })
 
+// Register fastify-static
+app.register(fastify_static, {
+  root: path.join(dirname, "static"),
+  prefix: "/static/",
+})
+
 // Set base path for jeopardy app
 const baseURL = "/jeopardy";
 const gameEngine = new Engine();
 
+
+// Serve static images
+app.get<{Params: IImageData}>("/static/images/:folder/:image", async (req, res) => {  
+  return res.code(200).header("Content-Type", "image/png")
+    .sendFile(`static/img/${req.params.folder}/${req.params.image}`);
+})
 
 // Query server if board needs to update
 app.get<{Params: IParamsGameID}>(`${baseURL}/query/:gameID`, (req, res) => {
@@ -83,8 +96,8 @@ app.get(`${baseURL}/test/status`, (req, res) => {
 });
 
 
-app.post<{Params: IParamsGameID, Body: IAnswerData}>(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
-  const { gameID } = req.params;
+app.post<{Params: IParamsGameIDQuestion, Body: IAnswerData}>(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
+  const { gameID, ques } = req.params;
   const { team1, team2, team3} = req.body;
 
   let game = gameEngine.getGame(gameID);
@@ -94,7 +107,11 @@ app.post<{Params: IParamsGameID, Body: IAnswerData}>(`${baseURL}/game/:gameID/qu
     game.teams[0].score = team1;
     game.teams[1].score = team2;
     game.teams[2].score = team3;
+
+    game.setAnswered(ques);
   }
+
+  res.send({success: true});
 
 });
 

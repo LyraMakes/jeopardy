@@ -40,9 +40,10 @@ class Game {
         let html = "<tr>";
         for (let i = 0; i < this.teams.length; i++) {
             html += `<td class="teamName">${this.teams[i].name}</td>`;
+            html += `<td class="teamScore" id="team${i}Score">${this.teams[i].score}</td>`;
             html += `<td class="teamAnswer">`;
-            html += `<button class="correct" id="team${i}Correct>Correct</button><br/>`;
-            html += `<button class="incorrect" id="team${i}Incorrect>Incorrect</button>`;
+            html += `<button class="correct" id="team${i}Correct">Correct</button><br/>`;
+            html += `<button class="incorrect" id="team${i}Incorrect">Incorrect</button>`;
             html += `</td>`;
         }
         html += "</tr>";
@@ -65,7 +66,25 @@ class Game {
             result.question = boardQuestion.question;
             result.answer = boardQuestion.answer;
         }
+        if (result.question.startsWith("img::")) {
+            result.question = `<img src="${result.question.substring(5)}" />`;
+        }
+        else if (result.question.startsWith("https://") || result.question.startsWith("http://")) {
+            result.question = `<img src="${result.question}" />`;
+        }
         return JSON.stringify(result);
+    }
+    setAnswered(question) {
+        let result = { question: "", answer: "" };
+        let { category, questionNum } = { category: parseInt(question[1]), questionNum: parseInt(question[3]) };
+        if (this.isDoubleJeopardy) {
+            let boardQuestion = this.board.doubleJeopardy[category].questions[questionNum];
+            boardQuestion.answered = true;
+        }
+        else {
+            let boardQuestion = this.board.singleJeopardy[category].questions[questionNum];
+            boardQuestion.answered = true;
+        }
     }
 }
 exports.Game = Game;

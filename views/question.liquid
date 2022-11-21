@@ -17,6 +17,8 @@
         team1Score = t1;
         team2Score = t2;
         team3Score = t3;
+
+        updateScores();
       }
 
       function setContent(content) {
@@ -30,7 +32,7 @@
         }
       }
 
-      function teamAnswered(team: number, isCorrect: boolean) {
+      function teamAnswered(team, isCorrect) {
         if (team == 1) {
           team1Score += questionData.value * (isCorrect ? 1 : -1);
         } else if (team == 2) {
@@ -40,6 +42,21 @@
         }
         
         if (isCorrect) { setContent("answer");}
+      }
+
+      function updateScores() {
+        document.getElementById('team0Score').innerHTML = team1Score;
+        document.getElementById('team1Score').innerHTML = team2Score;
+        document.getElementById('team2Score').innerHTML = team3Score;
+      }
+
+
+      function init() {
+        setContent("question");
+
+        team1Score = document.getElementById('team0Score').innerHTML;
+        team2Score = document.getElementById('team1Score').innerHTML;
+        team3Score = document.getElementById('team2Score').innerHTML;
       }
 
     </script>
@@ -53,6 +70,14 @@
         background-color: #060CE9;
       }
 
+      table#question {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+
+        table-layout: fixed;
+      }
+
       
 
       
@@ -62,15 +87,22 @@
 
     </style>
   </head>
-  <body>
+  <body onload="bodyInit()">
 
 
     <div id="board-parent">
-      <table>
-        <tr> <td id="question-content"></td> </tr>
+      <table id="question">
+        <tr> <td id="question-content" colspan="9" onclick="setContent(`answer`)"></td> </tr>
         <tr> {{ teamData }} </tr>
       </table>
     </div>
+
+
+    <script>
+      function bodyInit() {
+        init();
+      }
+    </script>
 
 
   </body>

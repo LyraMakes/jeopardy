@@ -61,8 +61,11 @@ app.get(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
         res.view("./views/question.liquid", { gameID: gameID, questionData: question, teamData: teams });
     }
 });
+app.get(`${baseURL}/test/status`, (req, res) => {
+    res.send({ status: "OK" });
+});
 app.post(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
-    const { gameID } = req.params;
+    const { gameID, ques } = req.params;
     const { team1, team2, team3 } = req.body;
     let game = gameEngine.getGame(gameID);
     if (game == null) {
@@ -72,7 +75,9 @@ app.post(`${baseURL}/game/:gameID/question/:ques/answer`, (req, res) => {
         game.teams[0].score = team1;
         game.teams[1].score = team2;
         game.teams[2].score = team3;
+        game.setAnswered(ques);
     }
+    res.send({ success: true });
 });
 app.get(`${baseURL}/new`, (req, res) => {
     res.view("./views/create.liquid");
