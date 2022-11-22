@@ -31,28 +31,16 @@
       }
 
       function teamAnswered(team, isCorrect) {
+        let team1Wager = parseInt(document.getElementById('team0WagerInput').value);
+        let team2Wager = parseInt(document.getElementById('team1WagerInput').value);
+        let team3Wager = parseInt(document.getElementById('team2WagerInput').value);
+        
         if (team == 1) {
-          team1Score += questionData.value * (
-            isCorrect
-              ? 1
-              : -1
-          );
+          team1Score += team1Wager * (isCorrect ? 1 : -1);
         } else if (team == 2) {
-          team2Score += questionData.value * (
-            isCorrect
-              ? 1
-              : -1
-          );
+          team2Score += team2Wager * (isCorrect ? 1 : -1);
         } else if (team == 3) {
-          team3Score += questionData.value * (
-            isCorrect
-              ? 1
-              : -1
-          );
-        }
-
-        if (isCorrect) {
-          setContent("answer");
+          team3Score += team3Wager * (isCorrect ? 1 : -1);
         }
 
         updateScores();
@@ -65,7 +53,13 @@
       }
 
 
-      function init() {}function show(id) {
+      function init() {
+        team1Score = parseInt(document.getElementById('team0Score').innerHTML);
+        team2Score = parseInt(document.getElementById('team1Score').innerHTML);
+        team3Score = parseInt(document.getElementById('team2Score').innerHTML);
+      }
+      
+      function show(id) {
         document.getElementById(id).style.display = "block";
       }
 
@@ -77,13 +71,11 @@
         };
 
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", `/jeopardy/game/{{gameID}}/question/{{ques}}/answer`, true);
+        xhr.open("POST", `/jeopardy/game/{{gameID}}/question/c0q0/answer`, true);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            window.location.href = `/jeopardy/game/{{gameID}}?nocache=${
-              (new Date()).getTime()
-            }`;
+            window.location.href = `/jeopardy/game/{{gameID}}/scoreboard`;
           }
         };
         xhr.send(JSON.stringify(scores));
@@ -101,7 +93,7 @@
       }
 
       table#questionData {
-        width: 70%;
+        width: 90%;
         margin-left: auto;
         margin-right: auto;
 
@@ -136,9 +128,9 @@
     <div id="board-parent">
       <table id="questionData">
         <tr class="question-content">
-          <td id="category" onclick="show(`question`)">{{questionData.category}}</td>
-          <td class="hidden" id="question" onclick="show(`answer`)">{{questionData.question}}</td>
-          <td class="hidden" id="answer">{{questionData.answer}}</td>
+          <td colspan="4" id="category" onclick="show(`question`)">{{questionData.category}}</td>
+          <td colspan="5"><span class="hidden" id="question" onclick="show(`answer`)">{{questionData.question}}</span></td>
+          <td colspan="4"><span class="hidden" id="answer">{{questionData.answer}}</span></td>
         </tr>
         <tr>{{teamData}}</tr>
       </table>

@@ -1,5 +1,5 @@
 import { Board, Category, FinalQuestion } from "./Board";
-import { JsonBoardData } from "./JSONBind";
+import { IScoreBoardData, JsonBoardData } from "./JSONBind";
 
 
 export class Game {
@@ -87,9 +87,23 @@ export class Game {
             html += `</td>`;
         }
 
-        html += `<td class="exit"><button class="exitButton" onclick="submitScores()">BACK</button></td>`;
+        html += `<td class="exit"><button class="exitButton" onclick="submitScores()">To End</button></td>`;
 
         return html;
+    }
+
+    renderScoreboard(): IScoreBoardData {
+        let names = "";
+        names += `<td id="team1Name">${this.teams[0].name}</td>`
+        names += `<td id="team2Name">${this.teams[1].name}</td>`
+        names += `<td id="team3Name">${this.teams[2].name}</td>`
+
+        let scores = "";
+        scores += `<td id="team1Score">${this.teams[0].score}</td>`
+        scores += `<td id="team2Score">${this.teams[1].score}</td>`
+        scores += `<td id="team3Score">${this.teams[2].score}</td>`
+
+        return {names: names, scores: scores};
     }
 
 

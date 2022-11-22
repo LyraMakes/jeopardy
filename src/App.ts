@@ -94,6 +94,17 @@ app.get<{Params: IParamsGameID}>(`${baseURL}/game/:gameID/final`, (req, res) => 
   }
 });
 
+app.get<{Params: IParamsGameID}>(`${baseURL}/game/:gameID/scoreboard`, (req, res) => {
+  const { gameID } = req.params;
+  let game = gameEngine.getGame(gameID);
+  if (game == null) {
+      res.status(404).send({error: "Game not found"});
+  } else {
+      let scoreBoard = game.renderScoreboard();
+      res.view("./views/scoreboard.liquid", { gameID: gameID, scoreBoard: scoreBoard });
+  }
+});
+
 
 app.get<{Params: IParamsGameIDQuestion}>(`${baseURL}/game/:gameID/question/:ques`, (req, res) => {
   const { gameID, ques } = req.params;

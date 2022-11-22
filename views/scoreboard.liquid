@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jeopardy | Game #{{gameID}}</title>
+    <style>
+      body {
+        background-color: #000066;
+        font-family: "Ariel Bold", sans-serif;
+      }
+
+      .board-background {
+        background-color: #060CE9;
+      }
+
+      #board-parent {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      table#scoreboard {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        table-layout: fixed;
+      }
+
+      #names, #scores {
+        text-align: center;
+        font-size: 2em;
+        font-weight: bold;
+        color: #f3e411;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="board-parent">
+      <table id="scoreboard">
+        <tr id="names">{{scoreBoard.names}}</tr>
+        <tr id="scores">{{scoreBoard.scores}}</tr>
+      </table>
+    </div>
+  </body>
+</html>

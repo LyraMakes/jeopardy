@@ -3,6 +3,11 @@ export interface IParamsGameID {
     gameID: number;
 }
 
+export interface IScoreBoardData {
+    names: string;
+    scores: string;
+}
+
 export interface IParamsGameIDQuestion {
     gameID: number;
     ques: string;

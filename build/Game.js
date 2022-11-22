@@ -54,6 +54,33 @@ class Game {
         html += "</tr>";
         return html;
     }
+    renderFinalTeams() {
+        let html = "";
+        for (let i = 0; i < this.teams.length; i++) {
+            html += `<td class="teamName">${this.teams[i].name}</td>`;
+            html += `<td class="teamScore" id="team${i}Score">${this.teams[i].score}</td>`;
+            html += `<td class="teamWager" id="team${i}Wager">`;
+            html += `<input type="number" id="team${i}WagerInput" min="0" max="${this.teams[i].score}" value="0" />`;
+            html += `</td>`;
+            html += `<td class="teamAnswer">`;
+            html += `<button class="correct" id="team${i}Correct" onclick="teamAnswered(${i + 1}, true)">Correct</button><br/>`;
+            html += `<button class="incorrect" id="team${i}Incorrect" onclick="teamAnswered(${i + 1}, false)">Incorrect</button>`;
+            html += `</td>`;
+        }
+        html += `<td class="exit"><button class="exitButton" onclick="submitScores()">To End</button></td>`;
+        return html;
+    }
+    renderScoreboard() {
+        let names = "";
+        names += `<td id="team1Name">${this.teams[0].name}</td>`;
+        names += `<td id="team2Name">${this.teams[1].name}</td>`;
+        names += `<td id="team3Name">${this.teams[2].name}</td>`;
+        let scores = "";
+        scores += `<td id="team1Score">${this.teams[0].score}</td>`;
+        scores += `<td id="team2Score">${this.teams[1].score}</td>`;
+        scores += `<td id="team3Score">${this.teams[2].score}</td>`;
+        return { names: names, scores: scores };
+    }
     getQuestion(question) {
         let result = { question: "", answer: "", value: 0 };
         let { category, questionNum } = { category: parseInt(question[1]), questionNum: parseInt(question[3]) };
